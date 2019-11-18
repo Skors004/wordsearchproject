@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+    <h1>Word Finder</h1>
+    <form action="/words" method="post">   
+	    <input name = "pattern" type = "text" pattern = "[a-z.]{3,10}">
+	    <select name="count">
+		    <option value = ""></option>
+		    <option value = "3">3</option>
+		    <option value = "4">4</option>
+		    <option value = "5">5</option>
+		    <option value = "6">6</option>
+		    <option value = "7">7</option>
+		    <option value = "8">8</option>
+		    <option value = "9">9</option>
+		    <option value = "10">10</option>
+	    </select>
+        {{ form.hidden_tag() }}
+        {{ render_field(form.avail_letters) }}
+        <br />
+        {{form.submit()}}
+    </form>
+{% endblock %}

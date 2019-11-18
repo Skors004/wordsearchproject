@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<main>
+    {% for word in wordlist: %}
+    <div class="wordbox" id = {{ word }} onclick ="apiCall(this.id)">{{ word }}</div>
+    {% endfor %}
+</main>
+<div id = "box" class = "box">
+	<div id = "content">
+		<span id = "close" class = "close">&times;</span>
+		<p id = "definition"></p>
+	</div>
+</div>
+<a href = "https://github.com/Skors004/word_search_project">Github Repo</a>
+	<script type = "text/javascript">
+		const url = "https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=";
+		var box = document.getElementById("box");
+		var close = document.getElementById("close");
+		close.onclick = function(){
+			box.style.display = "none";
+		}
+		function apiCall(word){
+			var myRequest = new Request("http://127.0.0.1:5000/api?word=" + word);
+			fetch(myRequest)
+			.then(function(resp){
+				var data = resp.headers.get('data');
+				if(data == null){
+					data = "No definition Found :(";
+				}
+				processData(data);
+			});
+
+		}
+		function processData(data){
+			document.getElementById("definition").innerHTML = data;
+			box.style.display = "block";
+		}
+	</script>
+{% endblock content %}
